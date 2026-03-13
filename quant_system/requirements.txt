@@ -1,0 +1,31 @@
+# A股量化交易系统依赖包
+# Python 3.8+ 兼容
+
+# 核心框架
+backtrader==1.9.78.123
+akshare==1.14.21
+
+# 数据处理
+pandas==2.0.3
+numpy==1.24.3
+
+# 可视化
+matplotlib==3.7.2
+plotly==5.17.0
+
+# 数据库（可选）
+sqlalchemy==2.0.21
+
+# 日志
+loguru==0.7.2
+
+# Web界面（可选）
+streamlit==1.28.0
+
+# 优化算法
+scipy==1.11.3
+
+# 其他工具
+python-dateutil==2.8.2
+pytz==2023.3
+requests==2.31.0
