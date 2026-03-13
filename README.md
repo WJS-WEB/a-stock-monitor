@@ -27,23 +27,56 @@
 ```
 quant_system/
 ├── data/
+│   ├── __init__.py
 │   └── data_fetcher.py          # 数据获取模块
+├── backtest/
+│   ├── __init__.py
+│   └── backtest_engine.py       # 回测引擎
+├── strategies/
+│   ├── __init__.py
+│   └── double_ma_strategy.py    # 双均线策略
+├── trading/
+│   ├── __init__.py
+│   └── simulated_trader.py      # 模拟交易器
+├── utils/
+│   ├── __init__.py
+│   ├── optimizer.py             # 参数优化器
+│   └── visualizer.py            # 可视化工具
+├── config.py                    # 全局配置
 ├── realtime_fetcher.py          # 实时行情获取
 ├── signal_generator.py          # 交易信号生成器
+├── monitor_gui.py               # 单股票监测GUI
 ├── monitor_gui_multi.py         # 多股票监测GUI
-├── config.py                    # 全局配置
+├── monitor_stock.py             # 股票监测核心
+├── main.py                      # 主程序入口
+├── verify_system.py             # 系统验证脚本
+├── requirements.txt             # 依赖列表
 └── cache/                       # 数据缓存目录
 ```
 
 ## 安装依赖
 
 ```bash
-pip install akshare pandas loguru tkinter
+pip install -r quant_system/requirements.txt
+```
+
+或手动安装：
+
+```bash
+pip install akshare pandas loguru matplotlib backtrader
 ```
 
 ## 使用方法
 
-### 多股票实时监测
+### 1. 系统验证
+
+首次使用前，验证系统环境：
+
+```bash
+python quant_system/verify_system.py
+```
+
+### 2. 多股票实时监测
 
 ```bash
 python quant_system/monitor_gui_multi.py
@@ -55,6 +88,22 @@ python quant_system/monitor_gui_multi.py
 - 点击"开始监测"启动自动刷新
 - 使用"添加股票"/"删除股票"管理列表
 - 查看实时价格、均线、交易信号和信心度
+
+### 3. 单股票监测
+
+```bash
+python quant_system/monitor_gui.py
+```
+
+### 4. 策略回测
+
+```bash
+python quant_system/main.py
+```
+
+### 5. 参数优化
+
+在 `main.py` 中启用优化功能，系统会自动寻找最优参数组合
 
 ## 配置说明
 
@@ -99,14 +148,48 @@ python quant_system/monitor_gui_multi.py
 - Pandas: 数据处理
 - Tkinter: GUI界面
 - Loguru: 日志管理
+- Matplotlib: 数据可视化
+- Backtrader: 回测框架
+
+## 核心功能
+
+### 数据获取
+- 历史数据缓存机制
+- 多源实时数据获取（spot_em、hist_min_em、daily fallback）
+- 自动重试和错误处理
+
+### 信号生成
+- 双均线策略（MA3/MA40）
+- 金叉/死叉自动检测
+- 超买超卖判断（偏离度>30%）
+- 信号信心度评分系统（0-100%）
+
+### 回测系统
+- 基于Backtrader的专业回测引擎
+- 支持多种策略
+- 网格搜索参数优化
+- 详细的性能指标统计
+
+### 可视化
+- 实时价格曲线
+- 均线指标显示
+- 交易信号标注
+- 回测结果图表
 
 ## 开发计划
 
+- [x] 双均线策略实现
+- [x] 实时数据获取（多源fallback）
+- [x] 智能信号生成（超买超卖检测）
+- [x] 多股票监测GUI
+- [x] 回测引擎
+- [x] 参数优化器
+- [x] 数据可视化
 - [ ] 添加更多技术指标（MACD、RSI、KDJ等）
 - [ ] 支持自定义策略
-- [ ] 添加回测功能
 - [ ] 支持更多数据源
 - [ ] 优化GUI界面
+- [ ] 添加实盘交易接口
 
 ## 许可证
 
